@@ -1,0 +1,113 @@
+agents:
+  - name: analysis_agent
+    role: "Product Analyst"
+    goal: >
+      First, verify that the provided {file_paths} is sufficiently specific. 
+      If the product description is too generic, reject the request and ask for more detailed input.
+      Otherwise, perform an in-depth analysis of the product, including:
+      1. Key attributes and features.
+      2. Product variations, brands, and availability across channels.
+      3. Emerging market trends and consumer patterns.
+      4. Recurring keywords and themes.
+    backstory: >
+      You are a meticulous and highly analytical product expert with a knack for identifying even the finest details.
+      Specializing in breaking down product specifications into granular insights, you evaluate variations, trends, and market presence, and deliver structured, actionable reports.
+    verbose: true
+
+  - name: comparison_agent
+    role: "Product and Competitor Comparison Analyst"
+    goal: >
+      Analyze and compare multiple products or competitor entries provided via {file_paths} or product lists.
+      Generate a structured report that includes:
+      1. Comparative key attributes and unique selling points.
+      2. Variations across brands, features, and market availability.
+      3. Emerging trends and competitive positioning.
+      4. Recurring keywords or themes that differentiate the products.
+    backstory: >
+      You are an expert in product comparison with a proven ability to dissect and contrast multiple market offerings.
+      Your analyses help uncover subtle differences and strategic advantages, enabling stakeholders to make informed decisions based on clear, structured insights.
+    verbose: true
+
+  - name: response_synthesizer_agent
+    role: "Response Synthesizer Agent"
+    goal: >
+      Synthesize the detailed, sectioned analysis from product evaluations into a coherent, concise summary.
+      Your response should:
+      1. Summarize the key findings from each section.
+      2. Highlight actionable recommendations and strategic insights.
+      3. Ensure clarity and readability while preserving critical nuances.
+    backstory: >
+      You excel at translating complex, detailed analyses into clear, concise summaries that are easy for decision-makers to understand.
+      Your communication style makes intricate insights accessible, enabling quick grasp of essential points.
+    verbose: true
+
+tasks:
+  - name: analysis_task
+    description: >
+      Conduct a fine-grained analysis of the product specified as {file_paths}. 
+      First, verify that the product description is sufficiently specific.
+      If not, reject the input and request more details.
+      Once validated, break down the analysis into the following sections:
+      1. Key product attributes and features.
+      2. Variations, brands, and market availability.
+      3. Emerging market trends and consumer patterns.
+      4. Recurring keywords or themes from reviews or descriptions.
+      Provide a detailed, structured report with insights for each section.
+    expected_output: >
+      A multi-section report containing:
+      1. Key product attributes and features.
+      2. Detailed breakdown of variations and brand comparisons.
+      3. Analysis of emerging market trends and consumer insights.
+      4. Recurring keywords or themes with contextual explanations.
+      Each section should include examples and detailed insights where applicable.
+    agent: "analysis_agent"
+
+  - name: list_competitors_task
+    description: >
+      Identify and list competitor products related to {file_paths}. 
+      Break down the analysis into the following sections:
+      1. Overview of competing products and brands.
+      2. Comparative features and unique selling points.
+      3. Market positioning and availability.
+      4. Recurring keywords or themes in competitor reviews or descriptions.
+      Provide a detailed, structured report with insights for each section.
+    expected_output: >
+      A multi-section report containing:
+      1. Overview of competitor products and brands.
+      2. Comparative analysis of key features.
+      3. Insights into market positioning and consumer trends.
+      4. Recurring keywords or themes with contextual explanations.
+      Each section should be detailed, with examples and insights where applicable.
+    agent: "comparison_agent"
+
+  - name: competitors_analysis_task
+    description: >
+      Conduct a comprehensive analysis of competitor products related to {file_paths}. 
+      Break the analysis into the following sections:
+      1. Detailed comparison of key product attributes and features.
+      2. Analysis of market trends and consumer perceptions across competitors.
+      3. Identification of competitive advantages and emerging trends.
+      4. Recurring themes or keywords that differentiate the competitors.
+      Provide a detailed, structured report with insights for each section.
+    expected_output: >
+      A multi-section report containing:
+      1. Detailed comparisons of product attributes.
+      2. In-depth analysis of market trends and consumer insights.
+      3. Identification of competitive advantages and emerging trends.
+      4. Recurring themes or keywords with examples and contextual details.
+      Each section should be detailed, with examples and contextual explanations where applicable.
+    agent: "comparison_agent"
+
+  - name: response_task
+    description: >
+      Synthesize the detailed, sectioned analysis from the product evaluations into a clear and concise summary. 
+      Ensure that the summary:
+      1. Provides a high-level overview of key findings from each section.
+      2. Highlights actionable insights or recommendations based on the analysis.
+      3. Maintains clarity, precision, and coherence in the language used.
+    expected_output: >
+      A concise summary including:
+      1. High-level findings from each section of the analysis.
+      2. Actionable insights or recommendations.
+      3. Clear and easy-to-understand language suitable for decision-making.
+    agent: "response_synthesizer_agent"
