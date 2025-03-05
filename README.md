@@ -1,6 +1,4 @@
-# Pedigree
-
-## Product and Competitor Analysis Tool
+## Product and Competitor Analysis Tool
 
 This project is designed for product analysts seeking to conduct a comprehensive analysis of a product along with its competitors. The tool gathers data on available products in the market and evaluates key attributes such as features, pricing, customer feedback, and market trends. It then generates structured insights and actionable recommendations to help you identify areas for improvement—ensuring that if the product is yours, you can make the necessary enhancements to outperform competitors.
 
