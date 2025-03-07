@@ -7,7 +7,7 @@ load_dotenv()
 
 api_key = os.getenv("BRIGHT_DATA_API_KEY")
 
-def trigger_scraping_niche(api_key, keyword, num_of_posts, start_date, end_date, country, endpoint):
+def trigger_scraping_products(api_key, keyword, num_of_posts, start_date, end_date, country, endpoint):
 
     payload = [{"keyword": keyword, 
                 "num_of_posts": num_of_posts, 

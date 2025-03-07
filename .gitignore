@@ -2,3 +2,6 @@ bin/
 include/
 lib/
 .env
+share/
+etc/
+__pycache__/

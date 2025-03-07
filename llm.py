@@ -7,7 +7,7 @@ import time
 import yaml
 
 from tqdm import tqdm
-from brightdata_scrapper import *
+from scrapper import *
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -19,7 +19,7 @@ brightdata_tool = os.getenv("BRIGHT_DATA_API_KEY")
 
 @st.cache_resource
 def load_llm():
-  llm = LLM(model="ollama/deepseek-r1:7b", , api_key=os.getenv("DEEPSEEK_API_KEY"))
+  llm = LLM(model="custom_openai/deepseek-reasoner", base_url="https://api.deepseek.com", api_key=os.getenv("DEEPSEEK_API_KEY"))
   return llm
 
 
@@ -103,9 +103,7 @@ def create_agents_and_tasks():
 #   Streamlit Setup
 # ===========================
 
-st.markdown("""
-    # YouTube Trend Analysis powered by <img src="data:image/png;base64,{}" width="120" style="vertical-align: -3px;"> & <img src="data:image/png;base64,{}" width="120" style="vertical-align: -3px;">
-""".format(base64.b64encode(open("assets/crewai.png", "rb").read()).decode(), base64.b64encode(open("assets/brightdata.png", "rb").read()).decode()), unsafe_allow_html=True)
+st.markdown("""# Product Analyst powered by CrewAI and Bright Data For Scrapping""")
 
 
 if "messages" not in st.session_state:
@@ -114,8 +112,8 @@ if "messages" not in st.session_state:
 if "response" not in st.session_state:
     st.session_state.response = None
 
-if "product" not in st.session_state:
-    st.session_state.product = []
+# if "products" not in st.session_state:
+#     st.session_state.products = []
 
 if "crew" not in st.session_state:
     st.session_state.crew = None      # Store the Crew object
@@ -224,7 +222,7 @@ with st.sidebar:
         st.session_state.products.append("")
 
     # Create input fields for each competitor product URL
-    for i, competitor in enumerate(st.session_state.product):
+    for i, competitor in enumerate(st.session_state.products):
         col1, col2 = st.columns([6, 1])
         with col1:
             st.session_state.products[i] = st.text_input(
@@ -236,7 +234,7 @@ with st.sidebar:
         with col2:
             if i > 0:
                 if st.button("❌", key=f"remove_{i}"):
-                    st.session_state.product.pop(i)
+                    st.session_state.products.pop(i)
                     st.rerun()
 
     # Add competitor product button
